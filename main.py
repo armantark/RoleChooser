@@ -54,6 +54,9 @@ class CustomButton:
                 buttons.remove(x)
         return CustomButton.min(buttons)
 
+    def __str__(self):
+        return self.name + " " + str(self.counter)
+
 
 def center(root):
     root.update_idletasks()
@@ -70,33 +73,49 @@ def close_window():
 
 
 role1, role2 = "", ""
-topcounter, jgcounter, midcounter, botcounter, suppcounter = 0, 0, 0, 0, 0
+
+counters = [0, 0, 0, 0, 0]
+with open('savefile','r') as file:
+    i = 0
+    for line in file:
+        parts = line.split(' ')
+        counters[i] = int(parts[1])
+        i += 1
+
 root = tk.Tk()
 root.title("RoleChooser")
-root.geometry("200x200")
+root.geometry("200x250")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
                         font="default 20")
 
 instructions.pack()
 
-suppButton = CustomButton(suppcounter, root, "Support")
+def saveButtonAction():
+    with open('savefile', 'w') as file:
+        for x in [topButton, jgButton, midButton, botButton, suppButton]:
+            file.write(str(x) + " \n")
+
+saveButton = tk.Button(root, text="Save", command=saveButtonAction)
+saveButton.pack()
+
+suppButton = CustomButton(counters[4], root, "Support")
 suppButton.button.config(command=suppButton.buttonAction, text="Support: " + str(suppButton.counter))
 suppButton.button.pack(side="bottom", fill='both')
 
-botButton = CustomButton(botcounter, root, "Bottom")
+botButton = CustomButton(counters[3], root, "Bottom")
 botButton.button.config(command=botButton.buttonAction, text="Bottom: " + str(botButton.counter))
 botButton.button.pack(side="bottom", fill='both')
 
-midButton = CustomButton(midcounter, root, "Middle")
+midButton = CustomButton(counters[2], root, "Middle")
 midButton.button.config(command=midButton.buttonAction, text="Middle: " + str(midButton.counter))
 midButton.button.pack(side="bottom", fill='both')
 
-jgButton = CustomButton(jgcounter, root, "Jungle")
+jgButton = CustomButton(counters[1], root, "Jungle")
 jgButton.button.config(command=jgButton.buttonAction, text="Jungle: " + str(jgButton.counter))
 jgButton.button.pack(side="bottom", fill='both')
 
-topButton = CustomButton(topcounter, root, "Top")
+topButton = CustomButton(counters[0], root, "Top")
 topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topButton.counter))
 topButton.button.pack(side="bottom", fill='both')
 
