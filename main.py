@@ -26,7 +26,7 @@ class CustomButton:
     def updateLabel():
         instructions.config(text="Primary: "
                                  + CustomButton.min([topButton, jgButton, midButton, botButton, suppButton])
-                                 + ", Secondary: "
+                                 + "\nSecondary: "
                                  + CustomButton.secondmin([topButton, jgButton, midButton, botButton, suppButton]))
 
     @staticmethod
@@ -38,10 +38,10 @@ class CustomButton:
         indices = [index for index, val in enumerate(counters) if val == maxcounter]
         if len(indices) > 1:
             times = []
-            for x in buttons:
-                times.append(x.lastTimePressed)
+            for x in indices:
+                times.append(buttons[x].lastTimePressed)
             earliest = min(times)
-            indices = [index for index, val in enumerate(times) if val == earliest]
+            indices = [indices[index] for index, val in enumerate(times) if val == earliest]
             return buttons[indices[0]].name
         else:
             return buttons[indices[0]].name
@@ -73,7 +73,7 @@ role1, role2 = "", ""
 topcounter, jgcounter, midcounter, botcounter, suppcounter = 0, 0, 0, 0, 0
 root = tk.Tk()
 root.title("RoleChooser")
-root.geometry("400x200")
+root.geometry("200x200")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
                         font="default 20")
