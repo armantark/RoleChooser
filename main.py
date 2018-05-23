@@ -10,7 +10,7 @@ class CustomButton:
     lastTimePressed = time.gmtime(0)
     instructions = None
 
-    def __init__(self, counter, root, name):
+    def __init__(self, counter, root, name, time):
         self.counter = counter
         self.button = tk.Button(root)
         self.name = name
@@ -55,7 +55,7 @@ class CustomButton:
         return CustomButton.min(buttons)
 
     def __str__(self):
-        return self.name + " " + str(self.counter)
+        return self.name + " " + str(self.counter) + " " + time.strftime("%d%m%y%H:%M:%S", self.lastTimePressed)
 
 
 def center(root):
@@ -75,12 +75,17 @@ def close_window():
 role1, role2 = "", ""
 
 counters = [0, 0, 0, 0, 0]
-with open('savefile','r') as file:
-    i = 0
-    for line in file:
-        parts = line.split(' ')
-        counters[i] = int(parts[1])
-        i += 1
+times = [time.gmtime(0), time.gmtime(0), time.gmtime(0), time.gmtime(0), time.gmtime(0)]
+try:
+    with open('savefile', 'r') as file:
+        i = 0
+        for line in file:
+            parts = line.split(' ')
+            counters[i] = int(parts[1])
+            times[i] = time.strptime(parts[2], "%d%m%y%H:%M:%S")
+            i += 1
+except FileNotFoundError:
+    print("No savefile, loading 0s")
 
 root = tk.Tk()
 root.title("RoleChooser")
@@ -91,31 +96,34 @@ instructions = tk.Label(root,
 
 instructions.pack()
 
+
 def saveButtonAction():
     with open('savefile', 'w') as file:
         for x in [topButton, jgButton, midButton, botButton, suppButton]:
             file.write(str(x) + " \n")
 
+
 saveButton = tk.Button(root, text="Save", command=saveButtonAction)
 saveButton.pack()
 
-suppButton = CustomButton(counters[4], root, "Support")
+print(times[4])
+suppButton = CustomButton(counters[4], root, "Support", times[4])
 suppButton.button.config(command=suppButton.buttonAction, text="Support: " + str(suppButton.counter))
 suppButton.button.pack(side="bottom", fill='both')
 
-botButton = CustomButton(counters[3], root, "Bottom")
+botButton = CustomButton(counters[3], root, "Bottom", times[3])
 botButton.button.config(command=botButton.buttonAction, text="Bottom: " + str(botButton.counter))
 botButton.button.pack(side="bottom", fill='both')
 
-midButton = CustomButton(counters[2], root, "Middle")
+midButton = CustomButton(counters[2], root, "Middle", times[2])
 midButton.button.config(command=midButton.buttonAction, text="Middle: " + str(midButton.counter))
 midButton.button.pack(side="bottom", fill='both')
 
-jgButton = CustomButton(counters[1], root, "Jungle")
+jgButton = CustomButton(counters[1], root, "Jungle", times[1])
 jgButton.button.config(command=jgButton.buttonAction, text="Jungle: " + str(jgButton.counter))
 jgButton.button.pack(side="bottom", fill='both')
 
-topButton = CustomButton(counters[0], root, "Top")
+topButton = CustomButton(counters[0], root, "Top", times[0])
 topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topButton.counter))
 topButton.button.pack(side="bottom", fill='both')
 
