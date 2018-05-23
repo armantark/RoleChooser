@@ -8,13 +8,12 @@ class CustomButton:
     counter = 0
     name = ""
     lastTimePressed = time.gmtime(0)
-    instructions = None
 
     def __init__(self, counter, root, name, time):
         self.counter = counter
         self.button = tk.Button(root)
         self.name = name
-        self.instructions = instructions
+        self.lastTimePressed = time
 
     def buttonAction(self):
         self.lastTimePressed = time.localtime()
