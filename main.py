@@ -1,6 +1,5 @@
-import tkinter as tk
-
 import time
+import tkinter as tk
 
 root = tk.Tk()
 
@@ -17,7 +16,7 @@ class CustomButton:
 
     # todo: somehow make the buttons lined up because it's super ugly right now
     def __init__(self, counter, name, time):
-        self.frame = tk.Frame(root)
+        self.frame = tk.Frame(root, bg="#222222")
         self.counter = counter
         self.innerIntVar = tk.IntVar()
         self.innerIntVar.set(self.counter)
@@ -26,7 +25,10 @@ class CustomButton:
         self.button.pack(side="right")
         self.name = name
         self.lastTimePressed = time
-        self.label = tk.Label(self.frame, text=self.name + ":")
+        # self.label = tk.Label(self.frame, text=self.name + ":") maybe make it so it has a fixed width?
+        photo = tk.PhotoImage(file="assets/"+name+".gif")
+        self.label = tk.Label(self.frame, image=photo, bg="#22223c")
+        self.label.image = photo
         self.label.pack(side="left")
         self.frame.pack(side="bottom")
 
@@ -118,7 +120,7 @@ root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
-                        font="default 20")
+                        font="Palatino 20", bg="#22223c", fg="#ccad70")
 
 instructions.pack()
 
@@ -129,7 +131,7 @@ def saveButtonAction():
             file.write(str(x) + " \n")
 
 
-saveButton = tk.Button(root, text="Save", command=saveButtonAction)
+saveButton = tk.Button(root, text="Save", command=saveButtonAction, bg="#22223c")
 saveButton.pack()
 
 suppButton = CustomButton(counters[4], "Support", times[4])
@@ -154,6 +156,6 @@ topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topBu
 
 CustomButton.updateLabel()
 
-root.configure()
+root.configure(bg="#22223c")
 # center(root)
 root.mainloop()
