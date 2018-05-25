@@ -3,8 +3,25 @@ import tkinter as tk
 import time
 
 
+root = tk.Tk()
 # TODO: make buttons into spinboxes
 class CustomButton:
+    # button = None
+    # counter = 0
+    # name = ""
+    # lastTimePressed = time.gmtime(0)
+    # label = None
+    # frame = tk.Frame(root)
+    #
+    # def __init__(self, counter, name, time):
+    #     self.counter = counter
+    #     self.button = tk.Spinbox(self.frame)
+    #     self.button.grid(column=0)
+    #     self.name = name
+    #     self.lastTimePressed = time
+    #     self.label = tk.Label(self.frame, text=self.name)
+    #     self.label.grid(column=1)
+    #     self.frame.pack(side="bottom")
     button = None
     counter = 0
     name = ""
@@ -87,7 +104,7 @@ try:
 except FileNotFoundError:
     print("No savefile, loading 0s")
 
-root = tk.Tk()
+
 root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
@@ -107,23 +124,23 @@ saveButton = tk.Button(root, text="Save", command=saveButtonAction)
 saveButton.pack()
 
 print(times[4])
-suppButton = CustomButton(counters[4], root, "Support", times[4])
+suppButton = CustomButton(counters[4], "Support", times[4])
 suppButton.button.config(command=suppButton.buttonAction, text="Support: " + str(suppButton.counter))
 suppButton.button.pack(side="bottom", fill='both')
 
-botButton = CustomButton(counters[3], root, "Bottom", times[3])
+botButton = CustomButton(counters[3], "Bottom", times[3])
 botButton.button.config(command=botButton.buttonAction, text="Bottom: " + str(botButton.counter))
 botButton.button.pack(side="bottom", fill='both')
 
-midButton = CustomButton(counters[2], root, "Middle", times[2])
+midButton = CustomButton(counters[2], "Middle", times[2])
 midButton.button.config(command=midButton.buttonAction, text="Middle: " + str(midButton.counter))
 midButton.button.pack(side="bottom", fill='both')
 
-jgButton = CustomButton(counters[1], root, "Jungle", times[1])
+jgButton = CustomButton(counters[1], "Jungle", times[1])
 jgButton.button.config(command=jgButton.buttonAction, text="Jungle: " + str(jgButton.counter))
 jgButton.button.pack(side="bottom", fill='both')
 
-topButton = CustomButton(counters[0], root, "Top", times[0])
+topButton = CustomButton(counters[0], "Top", times[0])
 topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topButton.counter))
 topButton.button.pack(side="bottom", fill='both')
 
