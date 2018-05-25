@@ -2,41 +2,51 @@ import tkinter as tk
 
 import time
 
-
 root = tk.Tk()
+
+
 # TODO: make buttons into spinboxes
 class CustomButton:
-    # button = None
-    # counter = 0
-    # name = ""
-    # lastTimePressed = time.gmtime(0)
-    # label = None
-    # frame = tk.Frame(root)
-    #
-    # def __init__(self, counter, name, time):
-    #     self.counter = counter
-    #     self.button = tk.Spinbox(self.frame)
-    #     self.button.grid(column=0)
-    #     self.name = name
-    #     self.lastTimePressed = time
-    #     self.label = tk.Label(self.frame, text=self.name)
-    #     self.label.grid(column=1)
-    #     self.frame.pack(side="bottom")
     button = None
     counter = 0
     name = ""
     lastTimePressed = time.gmtime(0)
+    label = None
+    frame = None
+    innerIntVar = None
 
+    # todo: somehow make the buttons lined up because it's super ugly right now
     def __init__(self, counter, name, time):
+        self.frame = tk.Frame(root)
         self.counter = counter
-        self.button = tk.Button(root)
+        self.innerIntVar = tk.IntVar()
+        self.innerIntVar.set(self.counter)
+        self.button = tk.Spinbox(self.frame, width="5", textvariable=self.innerIntVar,
+                                 from_=0, to=99999)
+        self.button.pack(side="right")
         self.name = name
         self.lastTimePressed = time
+        self.label = tk.Label(self.frame, text=self.name + ":")
+        self.label.pack(side="left")
+        self.frame.pack(side="bottom")
+
+    # button = None
+    # counter = 0
+    # name = ""
+    # lastTimePressed = time.gmtime(0)
+    #
+    # def __init__(self, counter, name, time):
+    #     self.counter = counter
+    #     self.button = tk.Button(root)
+    #     self.name = name
+    #     self.lastTimePressed = time
 
     def buttonAction(self):
-        self.lastTimePressed = time.localtime()
-        self.counter += 1
-        self.button.config(text=self.name + ": " + str(self.counter))
+        temp = self.counter
+        self.counter = int(self.button.get())
+        if self.counter > temp:
+            self.lastTimePressed = time.localtime()
+        #self.button.config(text=self.name + ": " + str(self.counter))
         self.updateLabel()
 
     @staticmethod
@@ -75,14 +85,14 @@ class CustomButton:
         return self.name + " " + str(self.counter) + " " + time.strftime("%d%m%y%H:%M:%S", self.lastTimePressed)
 
 
-def center(root):
-    root.update_idletasks()
-    w = root.winfo_screenwidth()
-    h = root.winfo_screenheight()
-    size = tuple(int(_) for _ in root.geometry().split('+')[0].split('x'))
-    x = w / 2 - size[0] / 2
-    y = h / 2 - size[1] / 2
-    root.geometry("%dx%d+%d+%d" % (size + (x, y)))
+# def center(root):
+#     root.update_idletasks()
+#     w = root.winfo_screenwidth()
+#     h = root.winfo_screenheight()
+#     size = tuple(int(_) for _ in root.geometry().split('+')[0].split('x'))
+#     x = w / 2 - size[0] / 2
+#     y = h / 2 - size[1] / 2
+#     root.geometry("%dx%d+%d+%d" % (size + (x, y)))
 
 
 def close_window():
@@ -104,7 +114,6 @@ try:
 except FileNotFoundError:
     print("No savefile, loading 0s")
 
-
 root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
@@ -123,26 +132,25 @@ def saveButtonAction():
 saveButton = tk.Button(root, text="Save", command=saveButtonAction)
 saveButton.pack()
 
-print(times[4])
 suppButton = CustomButton(counters[4], "Support", times[4])
 suppButton.button.config(command=suppButton.buttonAction, text="Support: " + str(suppButton.counter))
-suppButton.button.pack(side="bottom", fill='both')
+# suppButton.button.pack(side="bottom", fill='both')
 
 botButton = CustomButton(counters[3], "Bottom", times[3])
 botButton.button.config(command=botButton.buttonAction, text="Bottom: " + str(botButton.counter))
-botButton.button.pack(side="bottom", fill='both')
+# botButton.button.pack(side="bottom", fill='both')
 
 midButton = CustomButton(counters[2], "Middle", times[2])
 midButton.button.config(command=midButton.buttonAction, text="Middle: " + str(midButton.counter))
-midButton.button.pack(side="bottom", fill='both')
+# midButton.button.pack(side="bottom", fill='both')
 
 jgButton = CustomButton(counters[1], "Jungle", times[1])
 jgButton.button.config(command=jgButton.buttonAction, text="Jungle: " + str(jgButton.counter))
-jgButton.button.pack(side="bottom", fill='both')
+# jgButton.button.pack(side="bottom", fill='both')
 
 topButton = CustomButton(counters[0], "Top", times[0])
 topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topButton.counter))
-topButton.button.pack(side="bottom", fill='both')
+# topButton.button.pack(side="bottom", fill='both')
 
 CustomButton.updateLabel()
 
