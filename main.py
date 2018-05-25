@@ -3,13 +3,14 @@ import tkinter as tk
 import time
 
 
+# TODO: make buttons into spinboxes
 class CustomButton:
     button = None
     counter = 0
     name = ""
     lastTimePressed = time.gmtime(0)
 
-    def __init__(self, counter, root, name, time):
+    def __init__(self, counter, name, time):
         self.counter = counter
         self.button = tk.Button(root)
         self.name = name
@@ -129,5 +130,5 @@ topButton.button.pack(side="bottom", fill='both')
 CustomButton.updateLabel()
 
 root.configure()
-#center(root)
+# center(root)
 root.mainloop()
