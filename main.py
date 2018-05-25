@@ -21,13 +21,13 @@ class CustomButton:
         self.innerIntVar = tk.IntVar()
         self.innerIntVar.set(self.counter)
         self.button = tk.Spinbox(self.frame, width="5", textvariable=self.innerIntVar,
-                                 from_=0, to=99999)
+                                 from_=0, to=99999, highlightbackground="#222232", buttonbackground="#222232")
         self.button.pack(side="right")
         self.name = name
         self.lastTimePressed = time
         # self.label = tk.Label(self.frame, text=self.name + ":") maybe make it so it has a fixed width?
         photo = tk.PhotoImage(file="assets/"+name+".gif")
-        self.label = tk.Label(self.frame, image=photo, bg="#22223c")
+        self.label = tk.Label(self.frame, image=photo, bg="#222232")
         self.label.image = photo
         self.label.pack(side="left")
         self.frame.pack(side="bottom")
@@ -120,7 +120,7 @@ root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
-                        font="Palatino 20", bg="#22223c", fg="#ccad70")
+                        font="Palatino 20", bg="#222232", fg="#ccad70")
 
 instructions.pack()
 
@@ -131,7 +131,7 @@ def saveButtonAction():
             file.write(str(x) + " \n")
 
 
-saveButton = tk.Button(root, text="Save", command=saveButtonAction, bg="#22223c")
+saveButton = tk.Button(root, text="Save", command=saveButtonAction, highlightbackground="#222232")
 saveButton.pack()
 
 suppButton = CustomButton(counters[4], "Support", times[4])
@@ -156,6 +156,6 @@ topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topBu
 
 CustomButton.updateLabel()
 
-root.configure(bg="#22223c")
+root.configure(bg="#222232")
 # center(root)
 root.mainloop()
