@@ -129,5 +129,5 @@ topButton.button.pack(side="bottom", fill='both')
 CustomButton.updateLabel()
 
 root.configure()
-center(root)
+#center(root)
 root.mainloop()
