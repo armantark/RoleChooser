@@ -126,7 +126,7 @@ root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
-                        font="Palatino 20", bg=BGCOLOR, fg=FGCOLOR)
+                        font="Gill\ Sans 20", bg=BGCOLOR, fg=FGCOLOR)
 
 instructions.pack()
 
