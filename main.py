@@ -3,8 +3,10 @@ import tkinter as tk
 
 root = tk.Tk()
 
+BGCOLOR = "#222232"
+FGCOLOR = "#ccad70"
 
-# TODO: make buttons into spinboxes
+
 class CustomButton:
     button = None
     counter = 0
@@ -14,20 +16,23 @@ class CustomButton:
     frame = None
     innerIntVar = None
 
-    # todo: somehow make the buttons lined up because it's super ugly right now
     def __init__(self, counter, name, time):
-        self.frame = tk.Frame(root, bg="#222222")
+        self.frame = tk.Frame(root, bg=BGCOLOR
+                              )
         self.counter = counter
         self.innerIntVar = tk.IntVar()
         self.innerIntVar.set(self.counter)
         self.button = tk.Spinbox(self.frame, width="5", textvariable=self.innerIntVar,
-                                 from_=0, to=99999, highlightbackground="#222232", buttonbackground="#222232")
+                                 from_=0, to=99999, highlightbackground=BGCOLOR
+                                 , buttonbackground=BGCOLOR
+                                 )
         self.button.pack(side="right")
         self.name = name
         self.lastTimePressed = time
         # self.label = tk.Label(self.frame, text=self.name + ":") maybe make it so it has a fixed width?
-        photo = tk.PhotoImage(file="assets/"+name+".gif")
-        self.label = tk.Label(self.frame, image=photo, bg="#222232")
+        photo = tk.PhotoImage(file="assets/" + name + ".gif")
+        self.label = tk.Label(self.frame, image=photo, bg=BGCOLOR
+                              )
         self.label.image = photo
         self.label.pack(side="left")
         self.frame.pack(side="bottom")
@@ -48,8 +53,9 @@ class CustomButton:
         self.counter = int(self.button.get())
         if self.counter > temp:
             self.lastTimePressed = time.localtime()
-        #self.button.config(text=self.name + ": " + str(self.counter))
+        # self.button.config(text=self.name + ": " + str(self.counter))
         self.updateLabel()
+        saveButtonAction()
 
     @staticmethod
     def updateLabel():
@@ -120,7 +126,7 @@ root.title("RoleChooser")
 root.geometry("200x250")
 instructions = tk.Label(root,
                         text="Primary: " + role1 + ", Secondary: " + role2,
-                        font="Palatino 20", bg="#222232", fg="#ccad70")
+                        font="Palatino 20", bg=BGCOLOR, fg=FGCOLOR)
 
 instructions.pack()
 
@@ -131,7 +137,7 @@ def saveButtonAction():
             file.write(str(x) + " \n")
 
 
-saveButton = tk.Button(root, text="Save", command=saveButtonAction, highlightbackground="#222232")
+saveButton = tk.Button(root, text="Save", command=saveButtonAction, highlightbackground=BGCOLOR)
 saveButton.pack()
 
 suppButton = CustomButton(counters[4], "Support", times[4])
@@ -156,6 +162,6 @@ topButton.button.config(command=topButton.buttonAction, text="Top: " + str(topBu
 
 CustomButton.updateLabel()
 
-root.configure(bg="#222232")
+root.configure(bg=BGCOLOR)
 # center(root)
 root.mainloop()
